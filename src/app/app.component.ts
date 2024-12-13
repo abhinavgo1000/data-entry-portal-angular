@@ -6,16 +6,15 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 import { PageFooterComponent } from './components/page-footer/page-footer.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    MatCardModule,
-    PageHeaderComponent,
-    PageFooterComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        MatCardModule,
+        PageHeaderComponent,
+        PageFooterComponent
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'data-entry-portal-angular';
