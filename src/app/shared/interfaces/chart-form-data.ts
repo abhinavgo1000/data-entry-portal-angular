@@ -1,0 +1,2 @@
+export interface ChartFormData {
+}
