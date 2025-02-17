@@ -24,6 +24,14 @@ export class PageHeaderComponent {
     this.router.navigate(['/home']);
   }
 
+  navigateToAboutMe() {
+    this.router.navigate(['/about-me']);
+  }
+
+  navigateToForm() {
+    this.router.navigate(['/form']);
+  }
+
   navigateToBarChart() {
     this.router.navigate(['/bar-chart']);
   }
