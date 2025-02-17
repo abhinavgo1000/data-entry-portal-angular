@@ -19,4 +19,20 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 export class PageHeaderComponent {
 
   constructor(private router: Router) { }
+
+  navigateToHome() {
+    this.router.navigate(['/home']);
+  }
+
+  navigateToBarChart() {
+    this.router.navigate(['/bar-chart']);
+  }
+
+  navigateToLineChart() {
+    this.router.navigate(['/line-chart']);
+  }
+
+  navigateToPieChart() {
+    this.router.navigate(['/pie-chart']);
+  }
 }

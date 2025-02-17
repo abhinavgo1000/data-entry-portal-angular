@@ -9,8 +9,22 @@
             <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #navMenu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
+            <button mat-menu-item (click)="navigateToHome()">
+                <mat-icon>home</mat-icon>
+                <span>Home</span>
+            </button>
+            <button mat-menu-item (click)="navigateToBarChart()">
+                <mat-icon>bar_chart</mat-icon>
+                <span>Bar Chart</span>
+            </button>
+            <button mat-menu-item (click)="navigateToLineChart()">
+                <mat-icon>show_chart</mat-icon>
+                <span>Line Chart</span>
+            </button>
+            <button mat-menu-item (click)="navigateToPieChart()">
+                <mat-icon>pie_chart</mat-icon>
+                <span>Pie Chart</span>
+            </button>
         </mat-menu>
         <span>Data Entry App</span>
         <span class="header-spacer"></span>

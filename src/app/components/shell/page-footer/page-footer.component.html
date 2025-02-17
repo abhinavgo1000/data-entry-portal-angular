@@ -1,1 +1,23 @@
-<p>page-footer works!</p>
+<footer>
+    <mat-toolbar color="primary" class="mat-elevation-z2">
+        <button mat-button (click)="navigateToHome()">
+            <mat-icon>home</mat-icon>
+            <span>Home</span>
+        </button>
+        <span class="footer-spacer"></span>
+        <button mat-button (click)="navigateToBarChart()">
+            <mat-icon>bar_chart</mat-icon>
+            <span>Bar Chart</span>
+        </button>
+        <span class="footer-spacer"></span>
+        <button mat-button (click)="navigateToLineChart()">
+            <mat-icon>show_chart</mat-icon>
+            <span>Line Chart</span>
+        </button>
+        <span class="footer-spacer"></span>
+        <button mat-button (click)="navigateToPieChart()">
+            <mat-icon>pie_chart</mat-icon>
+            <span>Pie Chart</span>
+        </button>
+    </mat-toolbar>
+</footer>
