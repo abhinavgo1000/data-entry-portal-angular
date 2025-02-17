@@ -1,1 +1,24 @@
-<p>page-header works!</p>
+<header>
+    <mat-toolbar>
+        <button 
+            mat-icon-button 
+            class="example-icon" 
+            aria-label="Icon-button with menu icon"
+            [matMenuTriggerFor]="navMenu"
+        >
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #navMenu="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+        </mat-menu>
+        <span>Data Entry App</span>
+        <span class="header-spacer"></span>
+        <button mat-icon-button class="example-icon favorite-icon" aria-label="Icon-button with heart icon">
+            <mat-icon>favorite</mat-icon>
+        </button>
+        <button mat-icon-button class="example-icon" aria-label="Icon-button with share icon">
+            <mat-icon>share</mat-icon>
+        </button>
+    </mat-toolbar>
+</header>

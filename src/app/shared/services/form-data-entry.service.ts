@@ -9,4 +9,8 @@ import { ChartFormData } from '../interfaces/chart-form-data';
 export class FormDataEntryService {
 
   constructor(http: HttpClient) { }
+
+  postFormData(formData: ChartFormData) {
+    // Code to post form data to the server will go here
+  }
 }
