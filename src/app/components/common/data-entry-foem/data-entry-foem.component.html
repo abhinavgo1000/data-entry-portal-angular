@@ -1,1 +1,11 @@
-<p>data-entry-foem works!</p>
+<div class="form-container">
+    <form [formGroup]="dataEntryForm" (ngSubmit)="onFormSubmit()">
+        <button 
+            type="submit" 
+            mat-flat-button 
+            [disabled]="!dataEntryForm.valid"
+        >
+            {{submitText}}
+        </button>
+    </form>
+</div>

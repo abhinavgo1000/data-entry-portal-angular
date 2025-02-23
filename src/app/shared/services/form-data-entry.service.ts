@@ -10,7 +10,7 @@ export class FormDataEntryService {
 
   constructor(http: HttpClient) { }
 
-  postFormData(formData: ChartFormData) {
+  submitFormData(formData: ChartFormData) {
     // Code to post form data to the server will go here
   }
 }
