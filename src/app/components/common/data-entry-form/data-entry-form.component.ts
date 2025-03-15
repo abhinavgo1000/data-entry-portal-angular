@@ -23,7 +23,7 @@ export class FormErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-data-entry-foem',
+  selector: 'app-data-entry-form',
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -31,10 +31,10 @@ export class FormErrorStateMatcher implements ErrorStateMatcher {
     MatFormFieldModule,
     MatButtonModule
   ],
-  templateUrl: './data-entry-foem.component.html',
-  styleUrl: './data-entry-foem.component.scss'
+  templateUrl: './data-entry-form.component.html',
+  styleUrl: './data-entry-form.component.scss'
 })
-export class DataEntryFoemComponent implements OnInit {
+export class DataEntryFormComponent implements OnInit {
 
   submitText = 'Submit';
 
