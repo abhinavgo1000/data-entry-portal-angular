@@ -103,7 +103,15 @@ export class DataEntryFormComponent implements OnInit {
   }
 
   onFormSubmit(): void {
-    this.formDataEntryService.submitFormData(this.dataEntryForm.value);
+    this.formDataEntryService.submitFormData(this.dataEntryForm.value).subscribe(
+      (response) => {
+        console.log('Form submitted successfully', response);
+        this.resetForm();
+      },
+      (error) => {
+        console.error('Error submitting form', error);
+      }
+    );
   }
 
   updateErrorMessage() {
@@ -203,6 +211,33 @@ export class DataEntryFormComponent implements OnInit {
       this.productPurchaseDateError.set('You must enter a value');
     } else {
       this.productPurchaseDateError.set('');
+    }
+  }
+
+  resetForm(): void {
+    this.dataEntryForm.reset();
+    this.nameError.set('');
+    this.telephoneError.set('');
+    this.emailError.set('');
+    this.dobError.set('');
+    this.addressError.set('');
+    this.cityError.set('');
+    this.stateError.set('');
+    this.zipCodeError.set('');
+    this.countryError.set('');
+    this.productNameError.set('');
+    this.productTypeError.set('');
+    this.productCategoryError.set('');
+    this.productBrandError.set('');
+    this.productPriceError.set('');
+    this.productModelError.set('');
+    this.productPurchaseDateError.set('');
+  }
+  onSubmit(): void {
+    if (this.dataEntryForm.valid) {
+      this.onFormSubmit();
+    } else {
+      this.updateErrorMessage();
     }
   }
 }
