@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { ChartFormData } from '../interfaces/chart-form-data';
 
@@ -8,9 +10,17 @@ import { ChartFormData } from '../interfaces/chart-form-data';
 })
 export class ChartDataReadService {
 
-  constructor(http: HttpClient) { }
+  readonly apiUrl = 'http://localhost:5000/api/form/fetch-form-data'; 
 
-  fetchChartData(data: ChartFormData) {
-    // Code to fetch chart data from the server will go here
+  constructor(private http: HttpClient) { }
+
+  fetchChartData(): Observable<ChartFormData> {
+    return this.http.get<ChartFormData>(this.apiUrl).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error fetching chart data', error);
+        throw error;
+      })
+    );
   }
 }
