@@ -1,13 +1,18 @@
 export interface ChartFormData {
-    id: number;
     name: string;
     email: string;
     telephone: string;
-    dateOfBirth: string;
-    dueDate: string;
-    numberOfUnits: number;
-    unitPrice: number;
-    productUse: string;
-    productRating: number;
-    comments: string;
+    dateOfBirth: Date | null;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+    productName: string;
+    productType: string;
+    productCategory: string;
+    productBrand: string;
+    productPrice: number;
+    productModel: string;
+    productPurchaseDate: Date | null;
 }

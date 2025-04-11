@@ -1,11 +1,230 @@
 <div class="form-container">
     <form [formGroup]="dataEntryForm" (ngSubmit)="onFormSubmit()">
-        <button 
-            type="submit" 
-            mat-flat-button 
-            [disabled]="!dataEntryForm.valid"
-        >
-            {{submitText}}
-        </button>
+        <fieldset>
+            <legend><span class="accessibility">Data Entry Form</span></legend>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Name</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your name"
+                        [formControl]="nameControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (nameControl.invalid) {
+                        <mat-error>{{nameError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Telephone Number</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your phone number"
+                        [formControl]="telephoneControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (telephoneControl.invalid) {
+                        <mat-error>{{telephoneError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your email"
+                        [formControl]="emailControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (emailControl.invalid) {
+                        <mat-error>{{emailError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Date of Birth</mat-label>
+                    <input
+                        matInput
+                        [matDatepicker]="dobPicker"
+                        placeholder="Enter your date of birth"
+                        [formControl]="dobControl"
+                        (blur)="updateErrorMessage()" />
+                    <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dobPicker></mat-datepicker>
+                    @if (dobControl.invalid) {
+                        <mat-error>{{dobError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Address</mat-label>
+                    <textarea
+                        matInput
+                        placeholder="Enter your address"
+                        [formControl]="addressControl"
+                        (blur)="updateErrorMessage()"></textarea>
+                    @if (addressControl.invalid) {
+                        <mat-error>{{addressError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>City</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your city"
+                        [formControl]="cityControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (cityControl.invalid) {
+                        <mat-error>{{cityError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>State</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your state"
+                        [formControl]="stateControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (stateControl.invalid) {
+                        <mat-error>{{stateError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Zip Code</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your zip code"
+                        [formControl]="zipCodeControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (zipCodeControl.invalid) {
+                        <mat-error>{{zipCodeError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Country</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your country"
+                        [formControl]="countryControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (countryControl.invalid) {
+                        <mat-error>{{countryError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Product Name</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your product name"
+                        [formControl]="productNameControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (productNameControl.invalid) {
+                        <mat-error>{{productNameError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Product Type</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your product type"
+                        [formControl]="productTypeControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (productTypeControl.invalid) {
+                        <mat-error>{{productTypeError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Product Category</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your product category"
+                        [formControl]="productCategoryControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (productCategoryControl.invalid) {
+                        <mat-error>{{productCategoryError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Product Brand</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your product brand"
+                        [formControl]="productBrandControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (productBrandControl.invalid) {
+                        <mat-error>{{productBrandError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Product Price</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your product price"
+                        [formControl]="productPriceControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (productPriceControl.invalid) {
+                        <mat-error>{{productPriceError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Product Model</mat-label>
+                    <input
+                        matInput
+                        placeholder="Enter your product model"
+                        [formControl]="productModelControl"
+                        (blur)="updateErrorMessage()" />
+                    @if (productModelControl.invalid) {
+                        <mat-error>{{productModelError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="field-margin">
+                <mat-form-field>
+                    <mat-label>Date of Purchase</mat-label>
+                    <input
+                        matInput
+                        [matDatepicker]="prodPurchaseDatePicker"
+                        placeholder="Enter the date of purchase"
+                        [formControl]="productPurchaseDateControl"
+                        (blur)="updateErrorMessage()" />
+                    <mat-datepicker-toggle matSuffix [for]="prodPurchaseDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #prodPurchaseDatePicker></mat-datepicker>
+                    @if (productPurchaseDateControl.invalid) {
+                        <mat-error>{{productPurchaseDateError()}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div>
+                <button 
+                    type="submit" 
+                    mat-flat-button 
+                    [disabled]="!dataEntryForm.valid"
+                >
+                    {{submitText}}
+                </button>
+            </div>
+        </fieldset>
     </form>
 </div>
