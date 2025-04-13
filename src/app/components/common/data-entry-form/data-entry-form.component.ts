@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroupDirective,
@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { FormDataEntryService } from '../../../shared/services/form-data-entry.service';
 
@@ -44,6 +45,8 @@ export class DataEntryFormComponent implements OnInit {
   submitText = 'Submit';
 
   dataEntryForm!: FormGroup;
+
+  private _snackBar = inject(MatSnackBar);
 
   nameError = signal('');
   telephoneError = signal('');
@@ -107,6 +110,7 @@ export class DataEntryFormComponent implements OnInit {
       (response) => {
         console.log('Form submitted successfully', response);
         this.resetForm();
+        this.openSnackBar('Form submitted successfully', 'Close');
       },
       (error) => {
         console.error('Error submitting form', error);
@@ -233,11 +237,16 @@ export class DataEntryFormComponent implements OnInit {
     this.productModelError.set('');
     this.productPurchaseDateError.set('');
   }
+
   onSubmit(): void {
     if (this.dataEntryForm.valid) {
       this.onFormSubmit();
     } else {
       this.updateErrorMessage();
     }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }
