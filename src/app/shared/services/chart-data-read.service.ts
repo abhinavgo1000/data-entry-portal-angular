@@ -14,11 +14,21 @@ export class ChartDataReadService {
 
   constructor(private http: HttpClient) { }
 
-  fetchChartData(): Observable<ChartFormData> {
-    return this.http.get<ChartFormData>(this.apiUrl).pipe(
+  fetchChartData(): Observable<ChartFormData[]> {
+    return this.http.get<ChartFormData[]>(this.apiUrl).pipe(
       map(response => response),
       catchError(error => {
         console.error('Error fetching chart data', error);
+        throw error;
+      })
+    );
+  }
+
+  fetchChartDataById(id: string): Observable<ChartFormData> {
+    return this.http.get<ChartFormData>(`${this.apiUrl}/${id}`).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error fetching chart data by ID', error);
         throw error;
       })
     );
