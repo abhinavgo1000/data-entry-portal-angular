@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 
 import { ChartDataReadService } from '../../../shared/services/chart-data-read.service';
 import { ChartFormData } from '../../../shared/interfaces/chart-form-data';
+import { DateFormatterPipe } from '../../../shared/pipes/date-formatter.pipe';
 
 @Component({
   selector: 'app-data-card-list',
@@ -14,8 +15,10 @@ import { ChartFormData } from '../../../shared/interfaces/chart-form-data';
     CommonModule,
     MatIconModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    DateFormatterPipe
   ],
+  providers: [DatePipe],
   templateUrl: './data-card-list.component.html',
   styleUrl: './data-card-list.component.scss'
 })

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
@@ -5,8 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateFormatterPipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  constructor(private datePipe: DatePipe) {}
+
+  transform(value: Date | null, format: string = 'MMM d, y'): string {
+    if (!value) return '';
+
+    return this.datePipe.transform(value, format) || '';
   }
 
 }

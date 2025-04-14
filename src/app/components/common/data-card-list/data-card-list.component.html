@@ -1,12 +1,12 @@
-<ng-container *ngFor="let card of cardsData">
-    <mat-card appearance="outlined">
+<ng-container *ngIf="cardsData">
+    <mat-card appearance="outlined"  *ngFor="let card of cardsData">
         <mat-card-header>
             <mat-card-title>{{card.productName}}</mat-card-title>
             <mat-card-subtitle>{{card.productCategory}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
             <p>Sunmitted By: {{card.name}}</p>
-            <p>Purchased on: {{card.productPurchaseDate}}</p>
+            <p>Purchased on: {{card.productPurchaseDate | dateFormatter}}</p>
             <p>Price: {{card.productPrice}}</p>
             <p>Model: {{card.productModel}}</p>
         </mat-card-content>
@@ -18,5 +18,13 @@
                 <mat-icon>delete_outline</mat-icon>
             </button>
         </mat-card-actions>
+    </mat-card>
+</ng-container>
+
+<ng-container *ngIf="!cardsData">
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>No Data Found</mat-card-title>
+        </mat-card-header>
     </mat-card>
 </ng-container>
