@@ -5,9 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
-import { ChartDataReadService } from '../../../shared/services/chart-data-read.service';
-import { ChartFormData } from '../../../shared/interfaces/chart-form-data';
-import { DateFormatterPipe } from '../../../shared/pipes/date-formatter.pipe';
+import { ChartDataReadService } from 'services';
+import { ChartFormData } from 'interfaces';
+import { DateFormatterPipe, TelephoneFormatterPipe } from 'pipes';
 
 @Component({
   selector: 'app-data-card-list',
@@ -16,7 +16,8 @@ import { DateFormatterPipe } from '../../../shared/pipes/date-formatter.pipe';
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    DateFormatterPipe
+    DateFormatterPipe,
+    TelephoneFormatterPipe
   ],
   providers: [DatePipe],
   templateUrl: './data-card-list.component.html',
