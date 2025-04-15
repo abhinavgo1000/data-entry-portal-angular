@@ -22,7 +22,9 @@
       "components/*": ["app/components/*"],
       "services": ["app/shared/services"],
       "pipes": ["app/shared/pipes"],
-      "interfaces": ["app/shared/interfaces"]
+      "interfaces": ["app/shared/interfaces"],
+      "enums": ["app/shared/enums"],
+      "utils": ["app/shared/utils"]
     }
   },
   "angularCompilerOptions": {
