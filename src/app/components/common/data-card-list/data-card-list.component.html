@@ -1,5 +1,5 @@
-<ng-container *ngIf="cardsData">
-    <mat-card appearance="outlined"  *ngFor="let card of cardsData">
+<ng-container *ngIf="paginatedCards.length > 0">
+    <mat-card appearance="outlined"  *ngFor="let card of paginatedCards">
         <mat-card-header>
             <mat-card-title>{{card.productName}}</mat-card-title>
             <mat-card-subtitle>{{card.productCategory}}</mat-card-subtitle>
@@ -20,9 +20,17 @@
             </button>
         </mat-card-actions>
     </mat-card>
+    <mat-paginator 
+        [length]="cardsData.length"
+        [pageIndex]="pageIndex"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+        aria-label="Select page"
+        (page)="handlePageEvent($event)">
+    </mat-paginator>
 </ng-container>
 
-<ng-container *ngIf="!cardsData">
+<ng-container *ngIf="paginatedCards.length === 0">
     <mat-card appearance="outlined">
         <mat-card-header>
             <mat-card-title>No Data Found</mat-card-title>
