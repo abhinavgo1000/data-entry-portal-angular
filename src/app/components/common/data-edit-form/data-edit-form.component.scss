@@ -1,0 +1,19 @@
+mat-form-field {
+    width: 100%;
+}
+
+.field-margin {
+    margin-bottom: 20px;
+}
+
+fieldset {
+    border-color: transparent;
+}
+
+legend span.accessibility {
+    position:absolute;
+    left:-9999px;
+    width:100px;
+    height:auto;
+    overflow:hidden;
+}

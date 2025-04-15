@@ -6,6 +6,7 @@ import {
   Validators,
   FormsModule,
   ReactiveFormsModule,
+  FormBuilder,
   FormGroup,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -78,14 +79,16 @@ export class DataEntryFormComponent implements OnInit {
   productTypeControl = new FormControl('', Validators.required);
   productCategoryControl = new FormControl('', Validators.required);
   productBrandControl = new FormControl('', Validators.required);
-  productPriceControl = new FormControl('', Validators.required);
+  productPriceControl = new FormControl(0, Validators.required);
   productModelControl = new FormControl('', Validators.required);
   productPurchaseDateControl = new FormControl<Date | null>(null, Validators.required);
 
-  constructor(private formDataEntryService: FormDataEntryService) { }
+  constructor(
+    private _formDataEntryService: FormDataEntryService,
+    private _fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.dataEntryForm = new FormGroup({
+    this.dataEntryForm = this._fb.group({
       name: this.nameControl,
       telephone: this.telephoneControl,
       dateOfBirth: this.dobControl,
@@ -106,7 +109,7 @@ export class DataEntryFormComponent implements OnInit {
   }
 
   onFormSubmit(): void {
-    this.formDataEntryService.submitFormData(this.dataEntryForm.value).subscribe(
+    this._formDataEntryService.submitFormData(this.dataEntryForm.value).subscribe(
       (response) => {
         console.log('Form submitted successfully', response);
         this.resetForm();
