@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
-import { ChartDataReadService } from 'services';
+import { ChartDataReadService, ChartDataDeleteService } from 'services';
 import { ChartFormData } from 'interfaces';
 import { DateFormatterPipe, TelephoneFormatterPipe } from 'pipes';
 
@@ -29,7 +29,8 @@ export class DataCardListComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private _chartService: ChartDataReadService) { }
+    private _chartService: ChartDataReadService,
+    private _deleteService: ChartDataDeleteService) { }
 
   ngOnInit(): void {
     this._chartService.fetchChartData().subscribe((data: ChartFormData[]) => {
@@ -38,10 +39,12 @@ export class DataCardListComponent implements OnInit {
   }
 
   onCardEdit(card: ChartFormData): void {
-    this._router.navigate(['/form'], { queryParams: { id: card._id } });
+    this._router.navigate(['/edit-form'], { queryParams: { id: card._id } });
   }
 
   onCardDelete(card: ChartFormData) {
-    this._router.navigate(['/form'], { queryParams: { id: card._id } });
+    this._deleteService.deleteChartData(card._id).subscribe(() => {
+      this.cardsData = this.cardsData.filter(item => item._id !== card._id);
+    });
   }
 }

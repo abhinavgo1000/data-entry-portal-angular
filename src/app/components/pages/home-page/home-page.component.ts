@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DataCardListComponent } from '../../common/data-card-list/data-card-list.component';
+import { DataCardListComponent } from 'components/common/data-card-list/data-card-list.component';
 
 @Component({
   selector: 'app-home-page',

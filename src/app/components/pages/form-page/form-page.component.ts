@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DataEntryFormComponent } from '../../common/data-entry-form/data-entry-form.component';
+import { DataEntryFormComponent } from 'components/common/data-entry-form/data-entry-form.component';
 
 @Component({
   selector: 'app-form-page',
