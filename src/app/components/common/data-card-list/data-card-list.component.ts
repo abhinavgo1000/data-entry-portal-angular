@@ -40,9 +40,8 @@ export class PaginatorIntl extends MatPaginatorIntl {
 export class DataCardListComponent implements OnInit {
 
   cardsData: ChartFormData[] = [];
-  paginatedCards: ChartFormData[] = [];
 
-  length = this.cardsData.length;
+  totalDocuments = 0;
   pageSize = 10;
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
@@ -63,10 +62,14 @@ export class DataCardListComponent implements OnInit {
     private _deleteService: ChartDataDeleteService) { }
 
   ngOnInit(): void {
-    this._chartService.fetchChartData().subscribe((data: ChartFormData[]) => {
-      this.cardsData = data;
-      this.length = data.length;
-      this.updatePaginatedCards();
+    this.fetchData(this.pageIndex + 1, this.pageSize); // Fetch initial data
+  }
+
+  // Fetch data from the API
+  fetchData(page: number, pageSize: number): void {
+    this._chartService.fetchChartData(page, pageSize).subscribe((response) => {
+      this.cardsData = response.data;
+      this.totalDocuments = response.totalDocuments;
     });
   }
 
@@ -90,24 +93,17 @@ export class DataCardListComponent implements OnInit {
       if (result) {
         // User confirmed deletion
         this._deleteService.deleteChartData(card._id).subscribe(() => {
-          this.cardsData = this.cardsData.filter((item) => item._id !== card._id);
-          this.updatePaginatedCards();
+          this.cardsData = this.cardsData.filter(
+            (item) => item._id !== card._id
+          );
         });
       }
     });
   }
 
-  updatePaginatedCards(): void {
-    const startIndex = this.pageIndex * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.paginatedCards = this.cardsData.slice(startIndex, endIndex);
-  }
-
-  handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    this.length = e.length;
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
-    this.updatePaginatedCards();
+  handlePageEvent(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.fetchData(this.pageIndex + 1, this.pageSize); // Fetch data for the new page
   }
 }

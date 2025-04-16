@@ -14,11 +14,12 @@ export class ChartDataReadService {
 
   constructor(private http: HttpClient) { }
 
-  fetchChartData(): Observable<ChartFormData[]> {
-    return this.http.get<ChartFormData[]>(this.apiUrl).pipe(
+  fetchChartData(page: number, pageSize: number): Observable<{ totalDocuments: number; totalPages: number; currentPage: number; data: ChartFormData[] }> {
+    const params = { page: page.toString(), limit: pageSize.toString() };
+    return this.http.get<{ totalDocuments: number; totalPages: number; currentPage: number; data: ChartFormData[] }>(this.apiUrl, { params }).pipe(
       map(response => response),
       catchError(error => {
-        console.error('Error fetching chart data', error);
+        console.error('Error fetching paginated chart data', error);
         throw error;
       })
     );
