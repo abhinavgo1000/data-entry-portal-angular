@@ -1,4 +1,4 @@
-import { Component, Injectable, inject, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';

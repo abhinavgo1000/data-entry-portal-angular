@@ -113,7 +113,7 @@ export class DataEntryFormComponent implements OnInit {
       (response) => {
         console.log('Form submitted successfully', response);
         this.resetForm();
-        this.openSnackBar('Form submitted successfully', 'Close');
+        this.openSnackBar('Form submitted successfully', 'Close', 3000);
       },
       (error) => {
         console.error('Error submitting form', error);
@@ -249,7 +249,9 @@ export class DataEntryFormComponent implements OnInit {
     }
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action);
+  openSnackBar(message: string, action: string, duration: number): void {
+    this._snackBar.open(message, action, {
+      duration: duration
+    });
   }
 }

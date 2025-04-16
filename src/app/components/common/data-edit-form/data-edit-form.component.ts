@@ -165,7 +165,7 @@ export class DataEditFormComponent implements OnInit {
       };
 
       this._editService.updateChartData(updatedData).subscribe(() => {
-        this._snackBar.open('Data updated successfully!', 'Close', { duration: 3000 });
+        this.openSnackBar('Data updated successfully!', 'Close', 3000);
         this._router.navigate(['/home']); // Navigate back to the list
       });
     }
@@ -271,7 +271,9 @@ export class DataEditFormComponent implements OnInit {
     }
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action);
+  openSnackBar(message: string, action: string, duration: number): void {
+    this._snackBar.open(message, action, {
+      duration: duration
+    });
   }
 }
