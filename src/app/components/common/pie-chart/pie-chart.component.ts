@@ -1,6 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import Chart from 'chart.js/auto';
 
+import { ChartRenderUtil } from 'utils';
+
 @Component({
   selector: 'app-pie-chart',
   imports: [],
@@ -18,29 +20,29 @@ export class PieChartComponent implements OnInit {
   }
 
   createPieChart() {
-    let htmlRef = this.elementRef.nativeElement.querySelector(`#pieChart`);
-    this.chart = new Chart(htmlRef, {
-      type: 'pie', //this denotes tha type of chart
+    const htmlRef = this.elementRef.nativeElement.querySelector(`#pieChart`);
 
-      data: {// values on X-Axis
-        labels: ['Red', 'Pink','Green','Yellow','Orange','Blue', ],
-          datasets: [{
-            label: 'My First Dataset',
-            data: [300, 240, 100, 432, 253, 34],
-            backgroundColor: [
-              'red',
-              'pink',
-              'green',
-              'yellow',
-              'orange',
-              'blue',            
-            ],
-            hoverOffset: 4
-          }],
-      },
-      options: {
-        aspectRatio:2.5
-      }
-    });
+    const pieChartData = {
+      labels: ['Red', 'Pink','Green','Yellow','Orange','Blue', ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [300, 240, 100, 432, 253, 34],
+          backgroundColor: [
+            'red',
+            'pink',
+            'green',
+            'yellow',
+            'orange',
+            'blue',            
+          ],
+          hoverOffset: 4
+        }],
+    };
+
+    const pieChartOptions = {
+      aspectRatio:2.5
+    }
+    
+    this.chart = ChartRenderUtil.renderPieChart(htmlRef, pieChartData, pieChartOptions);
   }
 }
