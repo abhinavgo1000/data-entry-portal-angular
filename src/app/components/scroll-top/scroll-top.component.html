@@ -1,0 +1,11 @@
+<button
+    mat-fab
+    color="primary"
+    class="scroll-up-button"
+    (click)="scrollToTop()"
+    *ngIf="showScrollUpButton"
+    [@fadeInOut]="showScrollUpButton ? 'in' : 'out'"
+    [@fadeInOutParams]="{ duration: 300 }"
+>
+    <mat-icon>arrow_upward</mat-icon>
+</button>
