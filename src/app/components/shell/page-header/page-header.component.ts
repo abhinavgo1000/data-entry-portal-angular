@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -18,29 +17,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 })
 export class PageHeaderComponent {
 
-  constructor(private router: Router) { }
+  @Output() sideNavToggle = new EventEmitter<void>();
 
-  navigateToHome() {
-    this.router.navigate(['/home']);
-  }
+  constructor() { }
 
-  navigateToAboutMe() {
-    this.router.navigate(['/about-me']);
-  }
-
-  navigateToForm() {
-    this.router.navigate(['/form']);
-  }
-
-  navigateToBarChart() {
-    this.router.navigate(['/bar-chart']);
-  }
-
-  navigateToLineChart() {
-    this.router.navigate(['/line-chart']);
-  }
-
-  navigateToPieChart() {
-    this.router.navigate(['/pie-chart']);
+  share(link: string) {
+    console.log(`Sharing link: ${link}`);
   }
 }

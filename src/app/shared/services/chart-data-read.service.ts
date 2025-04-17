@@ -11,6 +11,7 @@ import { ChartFormData } from '../interfaces/chart-form-data';
 export class ChartDataReadService {
 
   readonly apiUrl = 'http://localhost:5000/api/form/fetch-form-data'; 
+  readonly apiUrlAll = 'http://localhost:5000/api/form/fetch-all-data';
 
   constructor(private http: HttpClient) { }
 
@@ -30,6 +31,16 @@ export class ChartDataReadService {
       map(response => response),
       catchError(error => {
         console.error('Error fetching chart data by ID', error);
+        throw error;
+      })
+    );
+  }
+
+  fetchAllChartData(): Observable<ChartFormData[]> {
+    return this.http.get<ChartFormData[]>(this.apiUrlAll).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error fetching all chart data', error);
         throw error;
       })
     );
