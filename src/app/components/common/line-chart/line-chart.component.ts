@@ -1,5 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 
+import { ChartDataReadService } from 'services';
+import { ChartFormData } from 'interfaces';
 import { ChartRenderUtil } from 'utils';
 
 @Component({
@@ -10,38 +12,55 @@ import { ChartRenderUtil } from 'utils';
 })
 export class LineChartComponent implements OnInit {
 
+  public chartData: ChartFormData[] = [];
+
   public chart: any;
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(
+    private elementRef: ElementRef,
+    private chartDataReadService: ChartDataReadService
+  ) { }
 
   ngOnInit(): void {
+    this.chartDataReadService.fetchAllChartData().subscribe(
+      (data: ChartFormData[]) => {
+        this.chartData = data;
+      }
+    );
     this.createLineChart();
   }
 
   createLineChart() {
     const htmlRef = this.elementRef.nativeElement.querySelector(`#lineChart`);
 
+    const labels = this.chartData.map(item => item.productName); // Use product names as labels
+    const salesData = this.chartData.map(item => item.productPrice); // Use product prices as sales data
+    const profitData = this.chartData.map(item => item.productPrice * 0.2); // Example: Calculate profit as 20% of price
+
     const lineChartData = {
-      labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-                               '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
+      labels: labels, 
          datasets: [
         {
-          label: "Sales",
-          data: ['467','576', '572', '79', '92',
-                               '574', '573', '576'],
+          label: 'Sales',
+          data: salesData,
           backgroundColor: 'blue'
         },
         {
-          label: "Profit",
-          data: ['542', '542', '536', '327', '17',
-                                   '0.00', '538', '541'],
+          label: 'Profit',
+          data: profitData,
           backgroundColor: 'limegreen'
         }  
       ]
     };
 
     const lineChartOptions = {
-      aspectRatio:2.5
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        }
+      }
     };
     
     this.chart = ChartRenderUtil.renderLineChart(htmlRef, lineChartData, lineChartOptions);
