@@ -25,9 +25,12 @@ export class LineChartComponent implements OnInit {
     this.chartDataReadService.fetchAllChartData().subscribe(
       (data: ChartFormData[]) => {
         this.chartData = data;
+        this.createLineChart();
+      },
+      (error) => {
+        console.error('Error fetching chart data', error);
       }
     );
-    this.createLineChart();
   }
 
   createLineChart() {

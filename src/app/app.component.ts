@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
 import { PageHeaderComponent } from 'components/shell/page-header/page-header.component';
@@ -15,7 +14,6 @@ import { ScrollTopComponent } from 'components/scroll-top/scroll-top.component';
     RouterOutlet,
     MatSidenavModule,
     MatListModule,
-    MatIconModule,
     MatButtonModule,
     PageHeaderComponent,
     PageFooterComponent,

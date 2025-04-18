@@ -25,9 +25,12 @@ export class PieChartComponent implements OnInit {
     this.chartDataReadService.fetchAllChartData().subscribe(
       (data: ChartFormData[]) => {
         this.chartData = data;
+        this.createPieChart();
+      },
+      (error) => {
+        console.error('Error fetching chart data', error);
       }
     );
-    this.createPieChart();
   }
 
   createPieChart() {
