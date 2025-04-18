@@ -36,9 +36,18 @@ export class LineChartComponent implements OnInit {
   createLineChart() {
     const htmlRef = this.elementRef.nativeElement.querySelector(`#lineChart`);
 
-    const labels = this.chartData.map(item => item.productName); // Use product names as labels
-    const salesData = this.chartData.map(item => item.productPrice); // Use product prices as sales data
-    const profitData = this.chartData.map(item => item.productPrice * 0.2); // Example: Calculate profit as 20% of price
+    const aggregatedData = this.chartData.reduce((acc, item) => {
+      if (!acc[item.productName]) {
+        acc[item.productName] = { sales: 0, profit: 0 };
+      }
+      acc[item.productName].sales += item.productPrice;
+      acc[item.productName].profit += item.productPrice * 0.2; // Example: Calculate profit as 20% of price
+      return acc;
+    }, {} as { [key: string]: { sales: number; profit: number } });
+
+    const labels = Object.keys(aggregatedData);
+    const salesData = labels.map(label => aggregatedData[label].sales);
+    const profitData = labels.map(label => aggregatedData[label].profit);
 
     const lineChartData = {
       labels: labels, 
