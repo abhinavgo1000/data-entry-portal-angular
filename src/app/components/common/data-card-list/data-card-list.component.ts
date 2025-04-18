@@ -1,6 +1,7 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -23,6 +24,7 @@ export class PaginatorIntl extends MatPaginatorIntl {
   selector: 'app-data-card-list',
   imports: [
     CommonModule,
+    MatTooltipModule,
     MatIconModule,
     MatButtonModule,
     MatCardModule,

@@ -12,10 +12,22 @@
             <p>Model: {{card.productModel}}</p>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-icon-button aria-label="edit button" color="primary" (click)="onCardEdit(card)">
+            <button 
+                mat-icon-button 
+                aria-label="edit button" 
+                color="primary" 
+                matTooltip="Edit Entry"
+                (click)="onCardEdit(card)"
+            >
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button aria-label="delete button" color="warn" (click)="onCardDelete(card)">
+            <button 
+                mat-icon-button 
+                aria-label="delete button" 
+                color="warn" 
+                matTooltip="Delete Entry"
+                (click)="onCardDelete(card)"
+            >
                 <mat-icon>delete_outline</mat-icon>
             </button>
         </mat-card-actions>
