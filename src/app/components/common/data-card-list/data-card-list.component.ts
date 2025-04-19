@@ -97,7 +97,7 @@ export class DataCardListComponent implements OnInit {
     const dialogRef = this._dialog.open(DataAlertDialogComponent, {
       width: '400px',
       data: {
-        title: 'Confirm Deletion',
+        title: 'Delete Entry',
         message: `Are you sure you want to delete the item "${card.productName}"?`,
         confirmText: 'Delete',
         cancelText: 'Cancel'
