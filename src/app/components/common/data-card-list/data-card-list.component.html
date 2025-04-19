@@ -1,5 +1,12 @@
 <ng-container *ngIf="cardsData.length > 0">
-    <mat-card appearance="outlined"  *ngFor="let card of cardsData">
+    <app-list-sort-filter 
+        [sortOptions]="sortOptions"
+        sortLabel="Sort Entries By"
+        filterLabel="Filter Entries"
+        (sortChange)="onSortChange($event)"
+        (filterChange)="onFilterChange($event)"
+    ></app-list-sort-filter>
+    <mat-card appearance="outlined" *ngFor="let card of cardsData">
         <mat-card-header>
             <mat-card-title>{{card.productName}}</mat-card-title>
             <mat-card-subtitle>{{card.productCategory}}</mat-card-subtitle>
@@ -43,6 +50,13 @@
 </ng-container>
 
 <ng-container *ngIf="cardsData.length === 0">
+    <app-list-sort-filter 
+        [sortOptions]="sortOptions"
+        sortLabel="Sort Entries By"
+        filterLabel="Filter Entries"
+        (sortChange)="onSortChange($event)"
+        (filterChange)="onFilterChange($event)"
+    ></app-list-sort-filter>
     <mat-card appearance="outlined">
         <mat-card-header>
             <mat-card-title>No Data Found</mat-card-title>

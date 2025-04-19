@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Injectable, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -9,8 +9,10 @@ import { PageEvent, MatPaginatorIntl, MatPaginatorModule } from '@angular/materi
 import { MatDialog } from '@angular/material/dialog';
 
 import { ChartDataReadService, ChartDataDeleteService } from 'services';
-import { ChartFormData } from 'interfaces';
+import { ChartFormData, SortModel } from 'interfaces';
 import { DateFormatterPipe, TelephoneFormatterPipe } from 'pipes';
+import { SortOptions } from 'enums';
+import { ListSortFilterComponent } from 'components/common/list-sort-filter/list-sort-filter.component';
 import { DataAlertDialogComponent } from 'components/common/data-alert-dialog/data-alert-dialog.component';
 
 @Injectable()
@@ -30,7 +32,8 @@ export class PaginatorIntl extends MatPaginatorIntl {
     MatCardModule,
     MatPaginatorModule,
     DateFormatterPipe,
-    TelephoneFormatterPipe
+    TelephoneFormatterPipe,
+    ListSortFilterComponent
   ],
   providers: [
     DatePipe, 
@@ -55,11 +58,22 @@ export class DataCardListComponent implements OnInit {
 
   pageEvent!: PageEvent;
 
-  
+  sortOptions: SortModel[] = [
+    { sortBy: 'No Value', sortVal: SortOptions.NoValue },
+    { sortBy: 'Name Ascending', sortVal: SortOptions.ByNameAsc },
+    { sortBy: 'Name Descending', sortVal: SortOptions.ByNameDesc },
+    { sortBy: 'Model Ascending', sortVal: SortOptions.ByModelAsc },
+    { sortBy: 'Model Descending', sortVal: SortOptions.ByModelDesc },
+    { sortBy: 'Purchase Date Ascending', sortVal: SortOptions.ByPurchaseDateAsc },
+    { sortBy: 'Purchase Date Descending', sortVal: SortOptions.ByPurchaseDateDesc }
+  ];
+
+  selectedSort: number | null = null;
 
   constructor(
     private _router: Router,
     private _dialog: MatDialog,
+    private cdr: ChangeDetectorRef,
     private _chartService: ChartDataReadService,
     private _deleteService: ChartDataDeleteService) { }
 
@@ -91,7 +105,6 @@ export class DataCardListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('Dialog result:', result);
       if (result) {
         // User confirmed deletion
         this._deleteService.deleteChartData(card._id).subscribe(() => {
@@ -107,5 +120,59 @@ export class DataCardListComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.fetchData(this.pageIndex + 1, this.pageSize); // Fetch data for the new page
+  }
+
+  onSortChange(sort: number | null): void {
+    this.selectedSort = sort;
+  
+    if (!sort) {
+      return; // Do nothing if no sort is selected
+    }
+  
+    const sortedData = [...this.cardsData]; // Create a copy of the array to avoid mutating the original data
+  
+    sortedData.sort((a, b) => {
+      switch (sort) {
+        case SortOptions.ByNameAsc:
+          return a.productName.localeCompare(b.productName);
+        case SortOptions.ByNameDesc:
+          return b.productName.localeCompare(a.productName);
+        case SortOptions.ByModelAsc:
+          return a.productModel.localeCompare(b.productModel);
+        case SortOptions.ByModelDesc:
+          return b.productModel.localeCompare(a.productModel);
+        case SortOptions.ByPurchaseDateAsc:
+          return (a.productPurchaseDate ? new Date(a.productPurchaseDate).getTime() : 0) -
+                 (b.productPurchaseDate ? new Date(b.productPurchaseDate).getTime() : 0);
+        case SortOptions.ByPurchaseDateDesc:
+          return (b.productPurchaseDate ? new Date(b.productPurchaseDate).getTime() : 0) -
+                 (a.productPurchaseDate ? new Date(a.productPurchaseDate).getTime() : 0);
+        default:
+          return 0; // Default return value for unhandled cases
+      }
+    });
+  
+    this.cardsData = sortedData; // Assign the sorted data back to `cardsData`
+    this.cdr.detectChanges(); 
+  }
+
+  onFilterChange(filterValue: string): void {
+
+    this.cardsData = this.cardsData.filter((item) => {
+      return (
+        item.productName.toLowerCase().includes(filterValue.toLowerCase()) ||
+        item.productModel.toLowerCase().includes(filterValue.toLowerCase()) ||
+        item.productPurchaseDate?.toString().toLowerCase().includes(filterValue.toLowerCase())
+      );
+    });
+  }
+
+  clearSort() {
+    this.selectedSort = null;
+    this.sortOptions.forEach((option) => {
+      option.sortVal = SortOptions.NoValue;
+    });
+    this.fetchData(this.pageIndex + 1, this.pageSize); // Fetch data for the new page 
+    this.cdr.detectChanges(); // Trigger change detection to update the view
   }
 }

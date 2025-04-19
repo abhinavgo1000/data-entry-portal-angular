@@ -1,1 +1,1 @@
-export * from './chart-axis';
+export * from './sort-filter-options';

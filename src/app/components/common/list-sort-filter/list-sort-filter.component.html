@@ -1,0 +1,21 @@
+<div class="list-sort-filter">
+    <mat-form-field>
+        <mat-label>{{sortLabel}}</mat-label>
+        <mat-select 
+            (selectionChange)="onSortChange($event.value)" 
+            [value]="selectedSort" 
+            class="mat-select-list-sort-filter"
+        >
+            @for (sortOption of sortOptions; track sortOption) {
+                <mat-option [value]="sortOption.sortVal">{{sortOption.sortBy}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="filter-text-field">
+        <mat-label>{{filterLabel}}</mat-label>
+        <input 
+            matInput 
+            placeholder="Enter your entries here" 
+            (input)="onFilterChange($event)" />
+    </mat-form-field>
+</div>
