@@ -160,8 +160,10 @@ export class DataCardListComponent implements OnInit {
 
     this.cardsData = this.cardsData.filter((item) => {
       return (
+        item.name.toLowerCase().includes(filterValue.toLowerCase()) ||
         item.productName.toLowerCase().includes(filterValue.toLowerCase()) ||
         item.productModel.toLowerCase().includes(filterValue.toLowerCase()) ||
+        item.productPrice?.toString().toLowerCase().includes(filterValue.toLowerCase()) ||
         item.productPurchaseDate?.toString().toLowerCase().includes(filterValue.toLowerCase())
       );
     });
