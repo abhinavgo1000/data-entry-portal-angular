@@ -9,6 +9,7 @@ import {
   FormBuilder,
   FormGroup,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { FormDataEntryService } from 'services';
+import * as FormDataActions from 'state/actions/form-data.actions';
 
 export class FormErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -85,6 +87,7 @@ export class DataEntryFormComponent implements OnInit {
 
   constructor(
     private _formDataEntryService: FormDataEntryService,
+    private store: Store,
     private _fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -109,16 +112,8 @@ export class DataEntryFormComponent implements OnInit {
   }
 
   onFormSubmit(): void {
-    this._formDataEntryService.submitFormData(this.dataEntryForm.value).subscribe(
-      (response) => {
-        console.log('Form submitted successfully', response);
-        this.resetForm();
-        this.openSnackBar('Form submitted successfully', 'Close', 3000);
-      },
-      (error) => {
-        console.error('Error submitting form', error);
-      }
-    );
+    const formData = this.dataEntryForm.value;
+    this.store.dispatch(FormDataActions.addFormData({ formData }));
   }
 
   updateErrorMessage() {
@@ -244,6 +239,8 @@ export class DataEntryFormComponent implements OnInit {
   onSubmit(): void {
     if (this.dataEntryForm.valid) {
       this.onFormSubmit();
+      this.resetForm();
+      this.openSnackBar('Form submitted successfully', 'Close', 3000);
     } else {
       this.updateErrorMessage();
     }
