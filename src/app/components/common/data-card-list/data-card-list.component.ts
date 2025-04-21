@@ -117,11 +117,10 @@ export class DataCardListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         // User confirmed deletion
-        this._deleteService.deleteChartData(card._id).subscribe(() => {
-          this.cardsData = this.cardsData.filter(
-            (item) => item._id !== card._id
-          );
-        });
+        this.store.dispatch(FormDataActions.deleteFormData({ id: card._id }));
+        this.cardsData = this.cardsData.filter(
+          (item) => item._id !== card._id
+        );
       }
     });
   }
