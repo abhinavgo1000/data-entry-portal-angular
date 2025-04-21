@@ -10,7 +10,6 @@ import { MatCardModule } from '@angular/material/card';
 import { PageEvent, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ChartDataReadService, ChartDataDeleteService } from 'services';
 import { ChartFormData, SortModel } from 'interfaces';
 import { DateFormatterPipe, TelephoneFormatterPipe } from 'pipes';
 import { SortOptions } from 'enums';
@@ -82,8 +81,7 @@ export class DataCardListComponent implements OnInit {
     private _router: Router,
     private _dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private store: Store,
-    private _deleteService: ChartDataDeleteService) 
+    private store: Store) 
     {
       this.cardsData$ = this.store.select(selectPaginatedFormData);
       this.totalDocuments$ = this.store.select(selectTotalDocuments);

@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import {
   FormControl,
   FormGroupDirective,
@@ -18,8 +19,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ChartDataReadService, ChartDataEditService } from 'services';
 import { ChartFormData } from 'interfaces';
+import * as FormDataActions from 'state/actions/form-data.actions';
+import { selectChartDataById } from 'state/selectors/form-data.selectors';
 
 export class FormErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -88,10 +90,9 @@ export class DataEditFormComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private _chartService: ChartDataReadService,
-    private _editService: ChartDataEditService,
     private _route: ActivatedRoute,
-    private _fb: FormBuilder 
+    private _fb: FormBuilder,
+    private store: Store
   ) {
     this.dataEditForm = this._fb.group({
       name: this.nameControl,
@@ -122,23 +123,26 @@ export class DataEditFormComponent implements OnInit {
 
   // Fetch the card data and populate the FormControls
   loadCardData(id: string): void {
-    this._chartService.fetchChartDataById(id).subscribe((data: ChartFormData) => {
-      this.nameControl.setValue(data.name || '');
-      this.telephoneControl.setValue(data.telephone || '');
-      this.emailControl.setValue(data.email || '');
-      this.dobControl.setValue(data.dateOfBirth ? new Date(data.dateOfBirth) : null);
-      this.addressControl.setValue(data.address || '');
-      this.cityControl.setValue(data.city || '');
-      this.stateControl.setValue(data.state || '');
-      this.zipCodeControl.setValue(data.zip || '');
-      this.countryControl.setValue(data.country || '');
-      this.productNameControl.setValue(data.productName || '');
-      this.productTypeControl.setValue(data.productType || '');
-      this.productCategoryControl.setValue(data.productCategory || '');
-      this.productBrandControl.setValue(data.productBrand || '');
-      this.productPriceControl.setValue(data.productPrice || 0);
-      this.productModelControl.setValue(data.productModel || '');
-      this.productPurchaseDateControl.setValue(data.productPurchaseDate ? new Date(data.productPurchaseDate) : null);
+    this.store.dispatch(FormDataActions.fetchChartDataById({ id }));
+    this.store.select(selectChartDataById(id)).subscribe((data) => {
+      if (data) {
+        this.nameControl.setValue(data.name || '');
+        this.telephoneControl.setValue(data.telephone || '');
+        this.emailControl.setValue(data.email || '');
+        this.dobControl.setValue(data.dateOfBirth ? new Date(data.dateOfBirth) : null);
+        this.addressControl.setValue(data.address || '');
+        this.cityControl.setValue(data.city || '');
+        this.stateControl.setValue(data.state || '');
+        this.zipCodeControl.setValue(data.zip || '');
+        this.countryControl.setValue(data.country || '');
+        this.productNameControl.setValue(data.productName || '');
+        this.productTypeControl.setValue(data.productType || '');
+        this.productCategoryControl.setValue(data.productCategory || '');
+        this.productBrandControl.setValue(data.productBrand || '');
+        this.productPriceControl.setValue(data.productPrice || 0);
+        this.productModelControl.setValue(data.productModel || '');
+        this.productPurchaseDateControl.setValue(data.productPurchaseDate ? new Date(data.productPurchaseDate) : null);
+      }
     });
   }
 
@@ -164,10 +168,9 @@ export class DataEditFormComponent implements OnInit {
         productPurchaseDate: this.productPurchaseDateControl.value,
       };
 
-      this._editService.updateChartData(updatedData).subscribe(() => {
-        this.openSnackBar('Data updated successfully!', 'Close', 3000);
-        this._router.navigate(['/home']); // Navigate back to the list
-      });
+      this.store.dispatch(FormDataActions.updateFormData({ formData: updatedData }));
+      this.openSnackBar('Data updated successfully!', 'Close', 3000);
+      this._router.navigate(['/home']); // Navigate back to the list
     }
   }
 
