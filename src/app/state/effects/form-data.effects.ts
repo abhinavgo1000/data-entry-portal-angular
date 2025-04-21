@@ -13,7 +13,7 @@ import {
 
 @Injectable({
     providedIn: 'root', // Ensure the service is provided in the root injector
-  })
+})
 export class FormDataEffects {
 
     actions$ = inject(Actions);
