@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, Injectable, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,6 +16,8 @@ import { DateFormatterPipe, TelephoneFormatterPipe } from 'pipes';
 import { SortOptions } from 'enums';
 import { ListSortFilterComponent } from 'components/common/list-sort-filter/list-sort-filter.component';
 import { DataAlertDialogComponent } from 'components/common/data-alert-dialog/data-alert-dialog.component';
+import * as FormDataActions from 'state/actions/form-data.actions';
+import { selectPaginatedFormData, selectTotalDocuments, selectLoading } from 'state/selectors/form-data.selectors';
 
 @Injectable()
 export class PaginatorIntl extends MatPaginatorIntl {
@@ -46,6 +50,10 @@ export class DataCardListComponent implements OnInit {
 
   cardsData: ChartFormData[] = [];
 
+  cardsData$: Observable<ChartFormData[]>;
+  totalDocuments$: Observable<number>;
+  loading$: Observable<boolean>;
+
   totalDocuments = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -74,19 +82,21 @@ export class DataCardListComponent implements OnInit {
     private _router: Router,
     private _dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private _chartService: ChartDataReadService,
-    private _deleteService: ChartDataDeleteService) { }
+    private store: Store,
+    private _deleteService: ChartDataDeleteService) 
+    {
+      this.cardsData$ = this.store.select(selectPaginatedFormData);
+      this.totalDocuments$ = this.store.select(selectTotalDocuments);
+      this.loading$ = this.store.select(selectLoading);
+    }
 
   ngOnInit(): void {
-    this.fetchData(this.pageIndex + 1, this.pageSize); // Fetch initial data
+    this.fetchData(); // Fetch initial data
   }
 
   // Fetch data from the API
-  fetchData(page: number, pageSize: number): void {
-    this._chartService.fetchChartData(page, pageSize).subscribe((response) => {
-      this.cardsData = response.data;
-      this.totalDocuments = response.totalDocuments;
-    });
+  fetchData(): void {
+    this.store.dispatch(FormDataActions.loadPaginatedFormData({ page: this.pageIndex + 1, pageSize: this.pageSize }));
   }
 
   onCardEdit(card: ChartFormData): void {
@@ -119,7 +129,7 @@ export class DataCardListComponent implements OnInit {
   handlePageEvent(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.fetchData(this.pageIndex + 1, this.pageSize); // Fetch data for the new page
+    this.fetchData(); // Fetch data for the new page
   }
 
   onSortChange(sort: number | null): void {
@@ -174,7 +184,7 @@ export class DataCardListComponent implements OnInit {
     this.sortOptions.forEach((option) => {
       option.sortVal = SortOptions.NoValue;
     });
-    this.fetchData(this.pageIndex + 1, this.pageSize); // Fetch data for the new page 
+    this.fetchData(); // Fetch data for the new page 
     this.cdr.detectChanges(); // Trigger change detection to update the view
   }
 }
