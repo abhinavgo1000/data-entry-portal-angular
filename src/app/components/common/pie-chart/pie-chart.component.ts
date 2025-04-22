@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ChartDataReadService } from 'services';
 import { ChartFormData } from 'interfaces';
 import * as FormDataActions from 'state/actions/form-data.actions';
 import { selectAllChartData } from 'state/selectors/form-data.selectors';
@@ -21,7 +20,6 @@ export class PieChartComponent implements OnInit {
 
   constructor(
     private elementRef: ElementRef,
-    private chartDataReadService: ChartDataReadService,
     private store: Store
   ) { }
 
