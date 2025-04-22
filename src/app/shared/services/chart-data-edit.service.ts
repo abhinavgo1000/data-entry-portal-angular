@@ -3,14 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { ChartFormData } from '../interfaces/chart-form-data';
+import { ChartFormData } from 'interfaces';
+import { environment } from 'environments/environment'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChartDataEditService {
 
-  readonly apiUrl = 'http://localhost:5000/api/form/update-form-data'; 
+  readonly apiUrl = `${environment.apiBaseUrl}/api/form/update-form-data`; 
 
   constructor(private http: HttpClient) { }
 

@@ -25,7 +25,8 @@
       "interfaces": ["app/shared/interfaces"],
       "enums": ["app/shared/enums"],
       "utils": ["app/shared/utils"],
-      "state/*": ["app/state/*"]
+      "state/*": ["app/state/*"],
+      "environments/*": ["environments/*"]
     }
   },
   "angularCompilerOptions": {

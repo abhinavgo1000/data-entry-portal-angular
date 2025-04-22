@@ -3,15 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { ChartFormData } from '../interfaces/chart-form-data';
+import { ChartFormData } from 'interfaces';
+import { environment } from 'environments/environment'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChartDataReadService {
 
-  readonly apiUrl = 'http://localhost:5000/api/form/fetch-form-data'; 
-  readonly apiUrlAll = 'http://localhost:5000/api/form/fetch-all-data';
+  readonly apiUrl = `${environment.apiBaseUrl}/api/form/fetch-form-data`; 
+  readonly apiUrlAll = `${environment.apiBaseUrl}/api/form/fetch-all-data`;
 
   constructor(private http: HttpClient) { }
 
