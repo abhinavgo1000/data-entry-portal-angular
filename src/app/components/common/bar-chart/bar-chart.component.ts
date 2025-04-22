@@ -1,7 +1,9 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-import { ChartDataReadService } from 'services';
 import { ChartFormData } from 'interfaces';
+import * as FormDataActions from 'state/actions/form-data.actions';
+import { selectAllChartData } from 'state/selectors/form-data.selectors';
 import { ChartRenderUtil } from 'utils';
 
 @Component({
@@ -18,23 +20,23 @@ export class BarChartComponent implements OnInit {
 
   constructor(
     private elementRef: ElementRef,
-    private chartDataReadService: ChartDataReadService
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.chartDataReadService.fetchAllChartData().subscribe(
-      (data: ChartFormData[]) => {
-        this.chartData = data;
-        this.createBarChart();
-      },
-      (error) => {
-        console.error('Error fetching chart data', error);
-      }
-    );
+    this.store.dispatch(FormDataActions.fetchAllChartData());
+    this.store.select(selectAllChartData).subscribe((data: ChartFormData[]) => {
+      this.chartData = data;
+      this.createBarChart();
+    });
   }
 
   createBarChart() {
     const htmlRef = this.elementRef.nativeElement.querySelector(`#barChart`);
+
+    if (this.chart) {
+      this.chart.destroy();
+    }
 
     const aggregatedData = this.chartData.reduce((acc, item) => {
       if (!acc[item.productName]) {
