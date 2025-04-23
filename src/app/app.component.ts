@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { PageHeaderComponent } from 'components/shell/page-header/page-header.component';
 import { PageFooterComponent } from 'components/shell/page-footer/page-footer.component';
+import { BreadcrumbComponent } from 'components/common/breadcrumb/breadcrumb.component';
 import { ScrollTopComponent } from 'components/scroll-top/scroll-top.component';
 
 @Component({
@@ -17,6 +18,7 @@ import { ScrollTopComponent } from 'components/scroll-top/scroll-top.component';
     MatButtonModule,
     PageHeaderComponent,
     PageFooterComponent,
+    BreadcrumbComponent,
     ScrollTopComponent
 ],
   templateUrl: './app.component.html',
