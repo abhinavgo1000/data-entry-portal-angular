@@ -1,7 +1,17 @@
 mat-form-field {
-    width: 40%;
+    width: 47%;
 }
 
 .filter-text-field {
     margin-left: 10vh;
+}
+
+@media (max-width: 768px) { 
+    mat-form-field {
+        width: 100%; // Set width to 100% for smaller screens
+    }
+
+    .filter-text-field {
+        margin-left: 0; // Remove margin for better alignment
+    }
 }
