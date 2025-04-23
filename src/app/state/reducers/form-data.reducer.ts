@@ -9,7 +9,7 @@ export const formDataReducer = createReducer(
         ...state,
         loading: true,
         error: null,
-      })),
+    })),
     on(FormDataActions.loadPaginatedFormDataSuccess, (state, { data, totalDocuments }) => ({
         ...state,
         formData: data,
@@ -57,22 +57,22 @@ export const formDataReducer = createReducer(
     })),
 
     // Add Form Data
-  on(FormDataActions.addFormDataSuccess, (state, { formData }) => ({
+    on(FormDataActions.addFormDataSuccess, (state, { formData }) => ({
         ...state,
         formData: [...state.formData, formData],
-  })),
+    })),
 
   // Update Form Data
-  on(FormDataActions.updateFormDataSuccess, (state, { formData }) => ({
+    on(FormDataActions.updateFormDataSuccess, (state, { formData }) => ({
         ...state,
         formData: state.formData.map((item) =>
             item._id === formData._id ? formData : item
         ),
-  })),
+    })),
 
   // Delete Form Data
-  on(FormDataActions.deleteFormDataSuccess, (state, { id }) => ({
+    on(FormDataActions.deleteFormDataSuccess, (state, { id }) => ({
         ...state,
         formData: state.formData.filter((item) => item._id !== id),
-  }))
+    }))
 );
