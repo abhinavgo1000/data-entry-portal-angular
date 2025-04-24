@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { FormDataState } from 'state/form-data.state';
 
 export const selectFormDataState = createFeatureSelector<FormDataState>('formData');
@@ -19,11 +20,16 @@ export const selectChartDataById = (id: string) =>
     );
 
 export const selectTotalDocuments = createSelector(
-  selectFormDataState,
-  (state: FormDataState) => state.totalDocuments
+    selectFormDataState,
+    (state: FormDataState) => state.totalDocuments
 );
 
 export const selectLoading = createSelector(
-  selectFormDataState,
-  (state: FormDataState) => state.loading
+    selectFormDataState,
+    (state: FormDataState) => state.loading
+);
+
+export const selectError = createSelector(
+    selectFormDataState,
+    (state: FormDataState) => state.error
 );
