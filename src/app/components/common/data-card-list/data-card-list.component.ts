@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Injectable, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Injectable, inject, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -77,11 +77,12 @@ export class DataCardListComponent implements OnInit {
 
   selectedSort: number | null = null;
 
+  private store = inject(Store);
+
   constructor(
     private _router: Router,
     private _dialog: MatDialog,
-    private cdr: ChangeDetectorRef,
-    private store: Store) 
+    private cdr: ChangeDetectorRef) 
     {
       this.cardsData$ = this.store.select(selectPaginatedFormData);
       this.totalDocuments$ = this.store.select(selectTotalDocuments);
