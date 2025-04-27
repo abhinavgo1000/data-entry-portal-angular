@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { PageEvent, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ChartFormData, SortModel } from 'interfaces';
 import { DateFormatterPipe, TelephoneFormatterPipe } from 'pipes';
@@ -52,6 +53,8 @@ export class DataCardListComponent implements OnInit {
   cardsData$: Observable<ChartFormData[]>;
   totalDocuments$: Observable<number>;
   loading$: Observable<boolean>;
+
+  private _snackBar = inject(MatSnackBar);
 
   totalDocuments = 0;
   pageSize = 10;
@@ -117,6 +120,7 @@ export class DataCardListComponent implements OnInit {
       if (result) {
         // User confirmed deletion
         this.store.dispatch(FormDataActions.deleteFormData({ id: card._id }));
+        this.openSnackBar('Entry deleted successfully!', 'Close', 3000);
         this.cardsData = this.cardsData.filter(
           (item) => item._id !== card._id
         );
@@ -184,5 +188,11 @@ export class DataCardListComponent implements OnInit {
     });
     this.fetchData(); // Fetch data for the new page 
     this.cdr.detectChanges(); // Trigger change detection to update the view
+  }
+
+  openSnackBar(message: string, action: string, duration: number): void {
+    this._snackBar.open(message, action, {
+      duration: duration
+    });
   }
 }
